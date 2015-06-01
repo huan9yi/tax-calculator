@@ -13,7 +13,6 @@ extern void ToTray();
 extern wchar_t* CharToWChar(const char*);
 extern wchar_t* UTF8CharToWChar(const char*);
 extern char* WCharToChar(const wchar_t*);
-extern void Debug(int, HWND=NULL);
 
 // Global Variables
 int window_width = 500;
