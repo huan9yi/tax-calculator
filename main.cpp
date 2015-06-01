@@ -67,7 +67,7 @@ struct DOMEventsHandlerType : htmlayout::event_handler
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// 防止程序被启动多次
+	// 防止程序被启动多�?
 	CreateMutex(NULL, false, app_name);
 	if (GetLastError() == ERROR_ALREADY_EXISTS)
 	{
@@ -186,7 +186,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	static POINT pt, pe;
 	static RECT rt, re;
 	
-	// 鼠标可拖动区域
+	// 鼠标可拖动区�?
 	static RECT drag_area;
 
 	// HTMLayout could be created as separate window 
@@ -208,7 +208,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			SetCapture(hWnd);      // 设置鼠标捕获(防止光标跑出窗口失去鼠标热点)     
 			
 			GetCursorPos(&pt);      // 获取鼠标光标指针当前位置
-			GetWindowRect(hWnd, &rt);  // 获取窗口位置与大小   
+			GetWindowRect(hWnd, &rt);  // 获取窗口位置与大�?  
 			re.right = rt.right - rt.left;    // 保存窗口宽度
 			re.bottom = rt.bottom - rt.top; // 保存窗口高度
 
@@ -220,7 +220,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 
 		case WM_LBUTTONUP:
-			ReleaseCapture();      // 释放鼠标捕获，恢复正常状态    
+			ReleaseCapture();      // 释放鼠标捕获，恢复正常状�?   
 			break;
 
 		case WM_MOUSEMOVE:
@@ -390,7 +390,7 @@ bool GetHtmlResource(LPCSTR pszName, /*out*/PBYTE &pb, /*out*/DWORD &cb)
 }
 
 /*
-最小化到系统托盘
+最小化到系统托�?
 */
 void ToTray()
 {
