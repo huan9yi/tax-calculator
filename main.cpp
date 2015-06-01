@@ -370,7 +370,7 @@ LRESULT OnAttachBehavior(LPNMHL_ATTACH_BEHAVIOR lpab)
 	return 0;
 }
 
-bool GetHtmlResource(LPCSTR pszName, /*out*/PBYTE& pb, /*out*/DWORD& cb)
+bool GetHtmlResource(LPCSTR pszName, /*out*/PBYTE &pb, /*out*/DWORD &cb)
 {
   // Find specified resource and check if ok
   HRSRC hrsrc = ::FindResource(hInst, pszName, MAKEINTRESOURCE(RT_HTML));
