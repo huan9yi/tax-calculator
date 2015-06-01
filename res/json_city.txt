@@ -1,0 +1,960 @@
+{"beijing":{	
+				"id": "1", 
+				"name": "北京", 
+				"tax":	{ 
+					"insurance_max":12603,//社保封顶数
+				    "insurance_min":1680,//社保下限
+				    "fund_max":12603,//公积金封顶数
+				    "pension":8,//养老金%
+				    "medicare":2,//医疗保险%
+				    "medicare_plan":3,//大病统筹
+				    "unemployment_insurance":0.2,//失业保险%
+				    "fund":12,//公积金%
+				    "threshold":3500,//个税起征点
+				    //单位部分
+				    "pension_firm":20,//养老金%
+				    "medicare_firm":10,//医疗保险%
+				    "unemployment_insurance_firm":1,//失业保险%
+				    "fund_firm":12,//公积金%
+				    "industrial_injury_firm":0.3,//工伤保险%
+				    "maternity_insurance_firm":0.8,//生育保险%
+				    "min_wage":1160//当地最低工资
+			 	}
+			},
+			
+"shanghai":{
+				"id": "2", 
+				"name": "上海", 
+				"tax":	{
+					"insurance_max":11688,//社保封顶数
+				    "insurance_min":2338,//社保下限
+				    "fund_max":11688,//公积金封顶数
+				    "pension":8,//养老金%
+				    "medicare":2,//医疗保险%
+				    "medicare_plan":0,//大病统筹
+				    "unemployment_insurance":1,//失业保险%
+				    "fund":7,//公积金%
+				    "threshold":3500,//个税起征点
+				    //单位部分
+				    "pension_firm":22,//养老金%
+				    "medicare_firm":12,//医疗保险%
+				    "unemployment_insurance_firm":2,//失业保险%
+				    "fund_firm":7,//公积金%
+				    "industrial_injury_firm":0.5,//工伤保险%
+				    "maternity_insurance_firm":0.5,//生育保险%
+				    "min_wage":1280//当地最低工资
+			 	}
+			},
+
+"guangzhou": {	
+				"id": "3", 
+				"name": "广州", 
+				"tax":	{ 
+					"insurance_max":12303,//社保封顶数
+				    "insurance_min":2461,//社保下限
+				    "fund_max":12303,//公积金封顶数
+				    "pension":8,//养老金%
+				    "medicare":2,//医疗保险%
+				    "medicare_plan":0,//大病统筹
+				    "unemployment_insurance":1,//失业保险%
+				    "fund":8,//公积金%
+				    "threshold":3500,//个税起征点
+				    //单位部分
+				    "pension_firm":20,//养老金%
+				    "medicare_firm":8,//医疗保险%
+				    "unemployment_insurance_firm":2,//失业保险%
+				    "fund_firm":8,//公积金%
+				    "industrial_injury_firm":0.5,//工伤保险%
+				    "maternity_insurance_firm":0.85,//生育保险%
+				    "min_wage":0//当地最低工资
+			 	}
+			},
+
+"shenzhen": {	
+					"id": "4", 
+					"name": "深圳", 
+					"tax":	{ 
+						"insurance_max":11682,//社保封顶数
+					    "insurance_min":2336,//社保下限
+					    "fund_max":11682,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":5,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":10,//养老金%
+					    "medicare_firm":5,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%
+					    "fund_firm":5,//公积金%
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.5,//生育保险%
+					    "min_wage":0//当地最低工资
+				 	}
+				},
+				
+"hangzhou": {	
+					"id": "5", 
+					"name": "杭州", 
+					"tax":	{ 
+						"insurance_max":6870,//社保封顶数
+					    "insurance_min":1374,//社保下限
+					    "fund_max":6870,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":14,//养老金%
+					    "medicare_firm":11.5,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.8,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"suzhou": {	
+					"id": "6", 
+					"name": "苏州", 
+					"tax":	{ 
+						"insurance_max":10065,//社保封顶数
+					    "insurance_min":2013,//社保下限
+					    "fund_max":10065,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":8,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":1,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},
+
+"ningbo": {	
+					"id": "7", 
+					"name": "宁波", 
+					"tax":	{ 
+						"insurance_max":16310,//社保封顶数
+					    "insurance_min":3262,//社保下限
+					    "fund_max":16310,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":12,//养老金%
+					    "medicare_firm":13,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.4,//工伤保险%
+					    "maternity_insurance_firm":0.7,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},
+
+"nanjing": {	
+					"id": "8", 
+					"name": "南京", 
+					"tax":	{ 
+						"insurance_max":10905,//社保封顶数
+					    "insurance_min":2181,//社保下限
+					    "fund_max":10905,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":9,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.8,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},
+
+"xiamen": {	
+					"id": "9", 
+					"name": "厦门", 
+					"tax":	{ 
+						"insurance_max":9114,//社保封顶数
+					    "insurance_min":1822.8,//社保下限
+					    "fund_max":9114,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":14,//养老金%
+					    "medicare_firm":8,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.8,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+							
+"zhuhai": {	
+					"id": "10", 
+					"name": "珠海", 
+					"tax":	{ 
+						"insurance_max":8043,//社保封顶数
+					    "insurance_min":1608.6,//社保下限
+					    "fund_max":8043,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":10,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":10,//养老金%
+					    "medicare_firm":6,//医疗保险%
+					    "unemployment_insurance_firm":1,//失业保险%				
+					    "industrial_injury_firm":0.2,//工伤保险%
+					    "maternity_insurance_firm":0.7,//生育保险%
+					    "fund_firm":10,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"wuhan": {	
+					"id": "11", 
+					"name": "武汉", 
+					"tax":	{ 
+						"insurance_max":8106,//社保封顶数
+					    "insurance_min":1621.2,//社保下限
+					    "fund_max":8106,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":8,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.7,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"chengdu": {	
+					"id": "12", 
+					"name": "成都", 
+					"tax":	{ 
+						"insurance_max":6819,//社保封顶数
+					    "insurance_min":1364,//社保下限
+					    "fund_max":6819,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":7,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":7.5,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.6,//工伤保险%
+					    "maternity_insurance_firm":0.6,//生育保险%
+					    "fund_firm":7,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"chongqing": {	
+					"id": "13", 
+					"name": "重庆", 
+					"tax":	{ 
+						"insurance_max":7743,//社保封顶数
+					    "insurance_min":1548.6,//社保下限
+					    "fund_max":7743,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":7,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":7,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.6,//工伤保险%
+					    "maternity_insurance_firm":0.5,//生育保险%
+					    "fund_firm":7,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"xian": {	
+					"id": "14", 
+					"name": "西安", 
+					"tax":	{ 
+						"insurance_max":7572,//社保封顶数
+					    "insurance_min":1514.4,//社保下限
+					    "fund_max":7572,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":7,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.5,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"kunming": {	
+					"id": "15", 
+					"name": "昆明", 
+					"tax":	{ 
+						"insurance_max":7248,//社保封顶数
+					    "insurance_min":1449,//社保下限
+					    "fund_max":7248,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":0.5,//失业保险%
+					    "fund":10,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":10,//医疗保险%
+					    "unemployment_insurance_firm":1,//失业保险%				
+					    "industrial_injury_firm":0.3,//工伤保险%
+					    "maternity_insurance_firm":0.5,//生育保险%
+					    "fund_firm":10,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"qingdao": {	
+					"id": "16", 
+					"name": "青岛", 
+					"tax":	{ 
+						"insurance_max":6348,//社保封顶数
+					    "insurance_min":1269.6,//社保下限
+					    "fund_max":6348,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":9,//医疗保险%
+					    "unemployment_insurance_firm":1,//失业保险%				
+					    "industrial_injury_firm":0.3,//工伤保险%
+					    "maternity_insurance_firm":0.7,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"shenyang": {	
+					"id": "17", 
+					"name": "沈阳", 
+					"tax":	{ 
+						"insurance_max":9645,//社保封顶数
+					    "insurance_min":1929,//社保下限
+					    "fund_max":9645,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":19,//养老金%
+					    "medicare_firm":8,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":2,//工伤保险%
+					    "maternity_insurance_firm":0.8,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"tianjin": {	
+					"id": "18", 
+					"name": "天津", 
+					"tax":	{ 
+						"insurance_max":9380,//社保封顶数
+					    "insurance_min":1720,//社保下限
+					    "fund_max":9380,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":11,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":9,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.8,//生育保险%
+					    "fund_firm":11,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"changchun": {	
+					"id": "19", 
+					"name": "长春", 
+					"tax":	{ 
+						"insurance_max":7611,//社保封顶数
+					    "insurance_min":1522,//社保下限
+					    "fund_max":7611,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":7,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":21,//养老金%
+					    "medicare_firm":7,//医疗保险%
+					    "unemployment_insurance_firm":1.5,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.7,//生育保险%
+					    "fund_firm":7,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"changsha": {	
+					"id": "20", 
+					"name": "长沙", 
+					"tax":	{ 
+						"insurance_max":7500,//社保封顶数
+					    "insurance_min":1500,//社保下限
+					    "fund_max":7500,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":8,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.7,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"dongguan": {	
+					"id": "21", 
+					"name": "东莞", 
+					"tax":	{ 
+						"insurance_max":8277,//社保封顶数
+					    "insurance_min":1655.4,//社保下限
+					    "fund_max":8277,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":0.5,//失业保险%
+					    "fund":10,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":10,//养老金%
+					    "medicare_firm":7.5,//医疗保险%
+					    "unemployment_insurance_firm":1.5,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.5,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"fuzhou": {	
+					"id": "22", 
+					"name": "福州", 
+					"tax":	{ 
+						"insurance_max":6845,//社保封顶数
+					    "insurance_min":1369,//社保下限
+					    "fund_max":6845,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":18,//养老金%
+					    "medicare_firm":8,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.7,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"guiyang": {	
+					"id": "23", 
+					"name": "贵阳", 
+					"tax":	{ 
+						"insurance_max":6150,//社保封顶数
+					    "insurance_min":1230,//社保下限
+					    "fund_max":6150,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":18,//养老金%
+					    "medicare_firm":7.5,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.6,//工伤保险%
+					    "maternity_insurance_firm":0.7,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"haerbing": {	
+					"id": "24", 
+					"name": "哈尔滨", 
+					"tax":	{ 
+						"insurance_max":6381,//社保封顶数
+					    "insurance_min":1276.2,//社保下限
+					    "fund_max":6381,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":22,//养老金%
+					    "medicare_firm":7.5,//医疗保险%
+					    "unemployment_insurance_firm":1,//失业保险%				
+					    "industrial_injury_firm":0.4,//工伤保险%
+					    "maternity_insurance_firm":0.5,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"haikou": {	
+					"id": "25", 
+					"name": "海口", 
+					"tax":	{ 
+						"insurance_max":7662,//社保封顶数
+					    "insurance_min":1532.4,//社保下限
+					    "fund_max":7662,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":12,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":7,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":1,//工伤保险%
+					    "maternity_insurance_firm":0.5,//生育保险%
+					    "fund_firm":12,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"hefei": {	
+					"id": "26", 
+					"name": "合肥", 
+					"tax":	{ 
+						"insurance_max":7446,//社保封顶数
+					    "insurance_min":1489.2,//社保下限
+					    "fund_max":7446,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":8,//医疗保险%
+					    "unemployment_insurance_firm":1,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.7,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"huhehaote": {	
+					"id": "27", 
+					"name": "呼和浩特", 
+					"tax":	{ 
+						"insurance_max":5076,//社保封顶数
+					    "insurance_min":1015.2,//社保下限
+					    "fund_max":5076,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":4,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":2,//工伤保险%
+					    "maternity_insurance_firm":0.7,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"jinan": {	
+					"id": "28", 
+					"name": "济南", 
+					"tax":	{ 
+						"insurance_max":7776,//社保封顶数
+					    "insurance_min":1556,//社保下限
+					    "fund_max":7776,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":8,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.8,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"lanzhou": {	
+					"id": "29", 
+					"name": "兰州", 
+					"tax":	{ 
+						"insurance_max":6528,//社保封顶数
+					    "insurance_min":1305.6,//社保下限
+					    "fund_max":6528,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":10,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":21,//养老金%
+					    "medicare_firm":6,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":1,//生育保险%
+					    "fund_firm":10,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"nanchang": {	
+					"id": "30", 
+					"name": "南昌", 
+					"tax":	{ 
+						"insurance_max":7611,//社保封顶数
+					    "insurance_min":1522.2,//社保下限
+					    "fund_max":7611,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":6,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.4,//工伤保险%
+					    "maternity_insurance_firm":0.8,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"nanning": {	
+					"id": "31", 
+					"name": "南宁", 
+					"tax":	{ 
+						"insurance_max":6415,//社保封顶数
+					    "insurance_min":1283,//社保下限
+					    "fund_max":6415,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":7.5,//医疗保险%
+					    "unemployment_insurance_firm":1,//失业保险%				
+					    "industrial_injury_firm":0.4,//工伤保险%
+					    "maternity_insurance_firm":0.6,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},
+				
+"shijiazhuang": {	
+					"id": "32", 
+					"name": "石家庄", 
+					"tax":	{ 
+						"insurance_max":7095,//社保封顶数
+					    "insurance_min":1419,//社保下限
+					    "fund_max":7095,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":7,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":8,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.8,//生育保险%
+					    "fund_firm":7,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"taiyuan": {	
+					"id": "33", 
+					"name": "太原", 
+					"tax":	{ 
+						"insurance_max":3873,//社保封顶数
+					    "insurance_min":774.6,//社保下限
+					    "fund_max":3873,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":0.5,//失业保险%
+					    "fund":6,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":6.5,//医疗保险%
+					    "unemployment_insurance_firm":1.5,//失业保险%				
+					    "industrial_injury_firm":0.6,//工伤保险%
+					    "maternity_insurance_firm":0.5,//生育保险%
+					    "fund_firm":10,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"wulumuqi": {	
+					"id": "34", 
+					"name": "乌鲁木齐", 
+					"tax":	{ 
+						"insurance_max":3702,//社保封顶数
+					    "insurance_min":740.4,//社保下限
+					    "fund_max":3702,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":12,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":7.5,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.8,//生育保险%
+					    "fund_firm":12,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"wuxi": {	
+					"id": "35", 
+					"name": "无锡", 
+					"tax":	{ 
+						"insurance_max":11751,//社保封顶数
+					    "insurance_min":1800,//社保下限
+					    "fund_max":11751,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":8,//医疗保险%
+					    "unemployment_insurance_firm":1,//失业保险%				
+					    "industrial_injury_firm":0.3,//工伤保险%
+					    "maternity_insurance_firm":0.9,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},				
+				
+"xining": {	
+					"id": "36", 
+					"name": "西宁", 
+					"tax":	{ 
+						"insurance_max":4647,//社保封顶数
+					    "insurance_min":929.4,//社保下限
+					    "fund_max":4647,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":7,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":6,//医疗保险%
+					    "unemployment_insurance_firm":1.5,//失业保险%				
+					    "industrial_injury_firm":1,//工伤保险%
+					    "maternity_insurance_firm":1.5,//生育保险%
+					    "fund_firm":7,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},
+				
+"yinchuan": {	
+					"id": "37", 
+					"name": "银川", 
+					"tax":	{ 
+						"insurance_max":9198,//社保封顶数
+					    "insurance_min":1839.6,//社保下限
+					    "fund_max":9198,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":6,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.9,//工伤保险%
+					    "maternity_insurance_firm":0.7,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},
+
+"yantai": {	
+					"id": "38", 
+					"name": "烟台", 
+					"tax":	{ 
+						"insurance_max":1484,//社保封顶数
+					    "insurance_min":7422,//社保下限
+					    "fund_max":7422,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":6,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.9,//工伤保险%
+					    "maternity_insurance_firm":0.7,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},
+				
+"zhengzhou": {	
+					"id": "39", 
+					"name": "郑州", 
+					"tax":	{ 
+						"insurance_max":7458,//社保封顶数
+					    "insurance_min":1491.6,//社保下限
+					    "fund_max":7458,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":10,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":8,//医疗保险%
+					    "unemployment_insurance_firm":2,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":1,//生育保险%
+					    "fund_firm":10,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				},
+				
+"qita": {	
+					"id": "40", 
+					"name": "其它", 
+					"tax":	{ 
+						"insurance_max":15000,//社保封顶数
+					    "insurance_min":1000,//社保下限
+					    "fund_max":15000,//公积金封顶数
+					    "pension":8,//养老金%
+					    "medicare":2,//医疗保险%
+					    "medicare_plan":0,//大病统筹
+					    "unemployment_insurance":1,//失业保险%
+					    "fund":8,//公积金%
+					    "threshold":3500,//个税起征点
+					    //单位部分
+					    "pension_firm":20,//养老金%
+					    "medicare_firm":10,//医疗保险%
+					    "unemployment_insurance_firm":1,//失业保险%				
+					    "industrial_injury_firm":0.5,//工伤保险%
+					    "maternity_insurance_firm":0.5,//生育保险%
+					    "fund_firm":8,//公积金%
+					    "min_wage":0//当地最低工资
+				 	}
+				}
+}

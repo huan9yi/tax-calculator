@@ -1,0 +1,178 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    </head>
+    <style>
+		body{position:relative; overflow:auto; margin:0; padding:0; border:1px solid #DCDCDC; font-family:'Microsoft Yahei','Simsun'}
+		input[disabled], #table1 .odd, #table2 .odd{background:#F0F0F0}
+		
+		#action_minimize_window{behavior:clickable; position:absolute; left:460px; top:8px; background-image:url(res:minimize1.png); width:12; height:12; cursor:pointer}
+		#action_minimize_window:hover{behavior:clickable; background-image:url(res:minimize2.png)}
+		#action_close_window{behavior:clickable; position:absolute; left:480px; top:8px; background-image:url(res:close1.png); width:12; height:12; cursor:pointer}
+		#action_close_window:hover{behavior:clickable; background-image:url(res:close2.png)}
+		#action_calc{behavior:clickable; cursor:pointer; position:absolute; left:145px; top:535px; width:94px; height:29px; line-height:29px; font-size:14px; text-align:center; color:white; background:url(res:button.gif) no-repeat}
+		#action_reset{behavior:clickable; cursor:pointer; position:absolute; left:265px; top:535px; width:94px; height:29px; line-height:29px; font-size:14px; text-align:center; color:white; background:url(res:button.gif) no-repeat}
+		
+		#table1{position:absolute; left:13px; top:175px; border:1px solid #d4d4d4; border-radius:6px}
+		#table1 th{text-align:center; font-weight:bold; height:36px; font-size:14px; border:none; background:-webkit-gradient(linear, 0 0, 0 100%, from(#fafafa), to(#f3f3f3)); background:-moz-linear-gradient(top, #fafafa,#f3f3f3); border-bottom:1px solid #d4d4d4; filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#fafafa,endColorstr=#f3f3f3,grandientType=1)}
+		
+		#table2{position:absolute; left:13px; top:225px; border:1px solid #d4d4d4; border-radius:6px}
+		#table2 th{text-align:center; font-weight:bold; height:36px; font-size:14px; border:none; background:-webkit-gradient(linear, 0 0, 0 100%, from(#fafafa), to(#f3f3f3)); background:-moz-linear-gradient(top, #fafafa,#f3f3f3); border-bottom:1px solid #d4d4d4; filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#fafafa,endColorstr=#f3f3f3,grandientType=1)}
+		#table2 td{text-align:center; border:1px solid #d4d4d4; height:30px; border-top:none; border-left:none}
+		#table2 .prel{padding-right:5px}
+		#table2 .prel input{text-align:right}
+		#table2 .line span{display:block; float:left; text-align:right; padding-left:10px; line-height:0px; margin-top:0px; margin-top:5px}
+		#table2 .fee{width:46px; padding-top:10px}
+		#table2 tfoot tr{height:36px}
+		#table2 tfoot td{border:none; height:25px}
+    </style>
+    <body>
+		<text style="position:absolute; left:5px; top:5px; font-size:14px; font-weight:bold; color:white">工资计算器</text>
+		<div style="height:10%; background-color:#3da2f2"/>
+		
+        <div id="action_minimize_window" title="最小化"/>
+		<div id="action_close_window" title="关闭"/>
+		<div id="action_calc">计 算</div>
+		<div id="action_reset">重 置</div>
+        
+		<div style="position:absolute; left:120px; top:70px">
+			&nbsp;&nbsp;&nbsp;选择城市：
+			<select id="select_city" size=1 style="width:132px">
+				<option value="guangzhou">广州</option>
+			</select>
+			<span style="color:red">*</span>
+			
+			<div style="margin-top:10px;">税前月收入： <input id="salary" type="number" size="18" minvalue=0 value="0" /> 元 <span style="color:red">*</span></div>
+			<div style="margin-top:10px;">税后月收入： <input id="real_salary" type="number" size="18" minvlue=0 disabled /> 元</div>
+		</div>
+		
+		<table id="table1" cellspacing="0" cellpadding="0">
+			<tr class="odd">
+				<th style="width:90px">缴纳个税</td>
+				<th style="width:380px">
+					<b id="tax"></b> 元
+					<span style="font-size:10px; font-weight:lighter;">（起征个税为<span id="threshold"></span>元）</span>
+				</td>
+			</tr>
+		</table>
+		
+		<table id="table2" cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr class="odd">
+					<th style="width:90px">五险一金</th>
+					<th style="width:190px">个人比例</th>
+					<th style="width:190px">单位比例</th>
+				</tr>
+				<tr>
+					<td>养老</td>
+					<td class="line">
+						<span class="prel">
+							<input id="pension" type="text" size="8">
+							<label>%</label>
+						</span>
+						<span id="pension_fee" class="fee"></span>
+					</td>
+					<td class="line">
+						<span class="prel">
+							<input id="pension_firm" type="text" size="8" disabled />
+							<label>%</label>
+						</span>
+						<span id="pension_firm_fee" class="fee"></span>
+					</td>
+				</tr>
+				<tr class="odd">
+					<td>医疗</td>
+					<td class="line">
+						<span class="prel">
+							<input id="medicare" type="text" size="8">
+							<label>%</label>
+						</span>
+						<span id="medicare_fee" class="fee"></span>
+					</td>
+					<td class="line">
+						<span class="prel">
+							<input id="medicare_firm" type="text" size="8" disabled />
+							<label>%</label>
+						</span>
+						<span id="medicare_firm_fee" class="fee"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>失业</td>
+					<td class="line">
+						<span class="prel">
+							<input id="unemployment_insurance" type="text" size="8">
+							<label>%</label>
+						</span>
+						<span id="unemployment_insurance_fee" class="fee"></span>
+					</td>
+					<td class="line">
+						<span class="prel">
+							<input id="unemployment_insurance_firm" type="text" size="8" disabled />
+							<label>%</label>
+						</span>
+						<span id="unemployment_insurance_firm_fee" class="fee"></span>
+					</td>
+				</tr>
+				<tr class="odd">
+					<td>工伤</td>
+					<td class="line">
+						<span class="prel">
+							<input id="industrial_injury" type="text" size="8">
+							<label>%</label>
+						</span>
+						<span id="industrial_injury_fee" class="fee"></span>
+					</td>
+					<td class="line">
+						<span class="prel">
+							<input id="industrial_injury_firm" type="text" size="8" disabled />
+							<label>%</label>
+						</span>
+						<span id="industrial_injury_firm_fee" class="fee"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>生育</td>
+					<td class="line">
+						<span class="prel">
+							<input id="maternity_insurance" type="text" size="8">
+							<label>%</label>
+						</span>
+						<span id="maternity_insurance_fee" class="fee"></span>
+					</td>
+					<td class="line">
+						<span class="prel">
+							<input id="maternity_insurance_firm" type="text" size="8" disabled />
+							<label>%</label>
+						</span>
+						<span id="maternity_insurance_firm_fee" class="fee"></span>
+					</td>
+				</tr>
+				<tr class="odd">
+					<td>公积金</td>
+					<td class="line">
+						<span class="prel">
+							<input id="fund" type="text" size="8">
+							<label>%</label>
+						</span>
+						<span id="fund_fee" class="fee"></span>
+					</td>
+					<td class="line">
+						<span class="prel">
+							<input id="fund_firm" type="text" size="8" disabled />
+							<label>%</label>
+						</span>
+						<span id="fund_firm_fee" class="fee"></span>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td>合计</td>
+					<td>个人缴纳：<b id="personal_total_fee"></b> 元</td>
+					<td>单位缴纳：<b id="firm_total_fee"></b> 元</td>
+				</tr>
+			</tfoot>
+		</table>
+    </body>
+</html>
