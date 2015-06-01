@@ -16,7 +16,7 @@ extern void AppInitial();
 extern void OnButtonClick(HELEMENT button);
 extern void OnSelectSelectionChanged(HELEMENT button);
 
-// ±äÎªÏµÍ³ÍĞÅÌÍ¼±êÊ±µÄÏûÏ¢
+// å˜ä¸ºç³»ç»Ÿæ‰˜ç›˜å›¾æ ‡æ—¶çš„æ¶ˆæ¯
 #define WM_ICON_NOTIFY WM_APP + 10
 
 // Global Variables
@@ -37,7 +37,7 @@ struct DOMEventsHandlerType : htmlayout::event_handler
 {
 	DOMEventsHandlerType() : event_handler(0xFFFFFFFF) {}
 
-	virtual BOOL handle_event(HELEMENT he, BEHAVIOR_EVENT_PARAMS& params)
+	virtual BOOL handle_event(HELEMENT he, BEHAVIOR_EVENT_PARAMS &params)
 	{
 		switch (params.cmd)
 		{
@@ -67,7 +67,7 @@ struct DOMEventsHandlerType : htmlayout::event_handler
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// ·ÀÖ¹³ÌĞò±»Æô¶¯¶à´Î
+	// é˜²æ­¢ç¨‹åºè¢«å¯åŠ¨å¤šæ¬¡
 	CreateMutex(NULL, false, app_name);
 	if (GetLastError() == ERROR_ALREADY_EXISTS)
 	{
@@ -153,7 +153,7 @@ bool InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	hInst = hInstance; // Store instance handle in our global variable
 
-	// ¾ÓÖĞÏÔÊ¾
+	// å±…ä¸­æ˜¾ç¤º
 	int scrWidth = GetSystemMetrics(SM_CXSCREEN);
 	int scrHeight = GetSystemMetrics(SM_CYSCREEN);
 	HWND hWnd = CreateWindow(szWindowClass, szTitle, WS_POPUP, (scrWidth - window_width) / 2, (scrHeight - window_height) / 2, window_width, window_height, NULL, NULL, hInstance, NULL);
@@ -182,11 +182,11 @@ bool InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	// Êó±êÍÏ¶¯´°¿Ú±äÁ¿
+	// é¼ æ ‡æ‹–åŠ¨çª—å£å˜é‡
 	static POINT pt, pe;
 	static RECT rt, re;
 	
-	// Êó±ê¿ÉÍÏ¶¯ÇøÓò
+	// é¼ æ ‡å¯æ‹–åŠ¨åŒºåŸŸ
 	static RECT drag_area;
 
 	// HTMLayout could be created as separate window 
@@ -203,14 +203,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch (message)
 	{
-		// ÎŞ´°¿ÚµÄ´°¿ÚÒÆ¶¯
+		// æ— çª—å£çš„çª—å£ç§»åŠ¨
 		case WM_LBUTTONDOWN:
-			SetCapture(hWnd);      // ÉèÖÃÊó±ê²¶»ñ(·ÀÖ¹¹â±êÅÜ³ö´°¿ÚÊ§È¥Êó±êÈÈµã)     
+			SetCapture(hWnd);      // è®¾ç½®é¼ æ ‡æ•è·(é˜²æ­¢å…‰æ ‡è·‘å‡ºçª—å£å¤±å»é¼ æ ‡çƒ­ç‚¹)     
 			
-			GetCursorPos(&pt);      // »ñÈ¡Êó±ê¹â±êÖ¸Õëµ±Ç°Î»ÖÃ
-			GetWindowRect(hWnd, &rt);  // »ñÈ¡´°¿ÚÎ»ÖÃÓë´óĞ¡   
-			re.right = rt.right - rt.left;    // ±£´æ´°¿Ú¿í¶È
-			re.bottom = rt.bottom - rt.top; // ±£´æ´°¿Ú¸ß¶È
+			GetCursorPos(&pt);      // è·å–é¼ æ ‡å…‰æ ‡æŒ‡é’ˆå½“å‰ä½ç½®
+			GetWindowRect(hWnd, &rt);  // è·å–çª—å£ä½ç½®ä¸å¤§å°   
+			re.right = rt.right - rt.left;    // ä¿å­˜çª—å£å®½åº¦
+			re.bottom = rt.bottom - rt.top; // ä¿å­˜çª—å£é«˜åº¦
 
 			drag_area.left = rt.left;
 			drag_area.top = rt.top;
@@ -220,15 +220,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 
 		case WM_LBUTTONUP:
-			ReleaseCapture();      // ÊÍ·ÅÊó±ê²¶»ñ£¬»Ö¸´Õı³£×´Ì¬    
+			ReleaseCapture();      // é‡Šæ”¾é¼ æ ‡æ•è·ï¼Œæ¢å¤æ­£å¸¸çŠ¶æ€    
 			break;
 
 		case WM_MOUSEMOVE:
-			GetCursorPos(&pe);     // »ñÈ¡¹â±êÖ¸ÕëµÄĞÂÎ»ÖÃ
+			GetCursorPos(&pe);     // è·å–å…‰æ ‡æŒ‡é’ˆçš„æ–°ä½ç½®
 			if (PtInRect(&drag_area, pe) && wParam == MK_LBUTTON){
-				re.left = rt.left + (pe.x - pt.x);  // ´°¿ÚĞÂµÄË®Æ½Î»ÖÃ  
-				re.top = rt.top + (pe.y - pt.y); // ´°¿ÚĞÂµÄ´¹Ö±Î»ÖÃ
-				MoveWindow(hWnd, re.left, re.top, re.right, re.bottom, true); // ÒÆ¶¯´°¿Ú
+				re.left = rt.left + (pe.x - pt.x);  // çª—å£æ–°çš„æ°´å¹³ä½ç½®  
+				re.top = rt.top + (pe.y - pt.y); // çª—å£æ–°çš„å‚ç›´ä½ç½®
+				MoveWindow(hWnd, re.left, re.top, re.right, re.bottom, true); // ç§»åŠ¨çª—å£
 
 				drag_area.left = re.left;
 				drag_area.top = re.top;
@@ -390,7 +390,7 @@ bool GetHtmlResource(LPCSTR pszName, /*out*/PBYTE &pb, /*out*/DWORD &cb)
 }
 
 /*
-×îĞ¡»¯µ½ÏµÍ³ÍĞÅÌ
+æœ€å°åŒ–åˆ°ç³»ç»Ÿæ‰˜ç›˜
 */
 void ToTray()
 {
