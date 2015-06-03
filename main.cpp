@@ -16,7 +16,7 @@ extern void AppInitial();
 extern void OnButtonClick(HELEMENT button);
 extern void OnSelectSelectionChanged(HELEMENT button);
 
-// 变为系统托盘图标时的消息
+// 鍙樹负绯荤粺鎵樼洏鍥炬爣鏃剁殑娑堟伅
 #define WM_ICON_NOTIFY WM_APP + 10
 
 // Global Variables
@@ -37,7 +37,7 @@ struct DOMEventsHandlerType : htmlayout::event_handler
 {
 	DOMEventsHandlerType() : event_handler(0xFFFFFFFF) {}
 
-	virtual BOOL handle_event(HELEMENT he, BEHAVIOR_EVENT_PARAMS& params)
+	virtual BOOL handle_event(HELEMENT he, BEHAVIOR_EVENT_PARAMS &params)
 	{
 		switch (params.cmd)
 		{
@@ -67,7 +67,7 @@ struct DOMEventsHandlerType : htmlayout::event_handler
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// 防止程序被启动多次
+	// 闃叉绋嬪簭琚惎鍔ㄥ娆?
 	CreateMutex(NULL, false, app_name);
 	if (GetLastError() == ERROR_ALREADY_EXISTS)
 	{
@@ -153,7 +153,7 @@ bool InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	hInst = hInstance; // Store instance handle in our global variable
 
-	// 居中显示
+	// 灞呬腑鏄剧ず
 	int scrWidth = GetSystemMetrics(SM_CXSCREEN);
 	int scrHeight = GetSystemMetrics(SM_CYSCREEN);
 	HWND hWnd = CreateWindow(szWindowClass, szTitle, WS_POPUP, (scrWidth - window_width) / 2, (scrHeight - window_height) / 2, window_width, window_height, NULL, NULL, hInstance, NULL);
@@ -182,11 +182,11 @@ bool InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	// 鼠标拖动窗口变量
+	// 榧犳爣鎷栧姩绐楀彛鍙橀噺
 	static POINT pt, pe;
 	static RECT rt, re;
 	
-	// 鼠标可拖动区域
+	// 榧犳爣鍙嫋鍔ㄥ尯鍩?
 	static RECT drag_area;
 
 	// HTMLayout could be created as separate window 
@@ -203,14 +203,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch (message)
 	{
-		// 无窗口的窗口移动
+		// 鏃犵獥鍙ｇ殑绐楀彛绉诲姩
 		case WM_LBUTTONDOWN:
-			SetCapture(hWnd);      // 设置鼠标捕获(防止光标跑出窗口失去鼠标热点)     
+			SetCapture(hWnd);      // 璁剧疆榧犳爣鎹曡幏(闃叉鍏夋爣璺戝嚭绐楀彛澶卞幓榧犳爣鐑偣)     
 			
-			GetCursorPos(&pt);      // 获取鼠标光标指针当前位置
-			GetWindowRect(hWnd, &rt);  // 获取窗口位置与大小   
-			re.right = rt.right - rt.left;    // 保存窗口宽度
-			re.bottom = rt.bottom - rt.top; // 保存窗口高度
+			GetCursorPos(&pt);      // 鑾峰彇榧犳爣鍏夋爣鎸囬拡褰撳墠浣嶇疆
+			GetWindowRect(hWnd, &rt);  // 鑾峰彇绐楀彛浣嶇疆涓庡ぇ灏?  
+			re.right = rt.right - rt.left;    // 淇濆瓨绐楀彛瀹藉害
+			re.bottom = rt.bottom - rt.top; // 淇濆瓨绐楀彛楂樺害
 
 			drag_area.left = rt.left;
 			drag_area.top = rt.top;
@@ -220,15 +220,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 
 		case WM_LBUTTONUP:
-			ReleaseCapture();      // 释放鼠标捕获，恢复正常状态    
+			ReleaseCapture();      // 閲婃斁榧犳爣鎹曡幏锛屾仮澶嶆甯哥姸鎬?   
 			break;
 
 		case WM_MOUSEMOVE:
-			GetCursorPos(&pe);     // 获取光标指针的新位置
+			GetCursorPos(&pe);     // 鑾峰彇鍏夋爣鎸囬拡鐨勬柊浣嶇疆
 			if (PtInRect(&drag_area, pe) && wParam == MK_LBUTTON){
-				re.left = rt.left + (pe.x - pt.x);  // 窗口新的水平位置  
-				re.top = rt.top + (pe.y - pt.y); // 窗口新的垂直位置
-				MoveWindow(hWnd, re.left, re.top, re.right, re.bottom, true); // 移动窗口
+				re.left = rt.left + (pe.x - pt.x);  // 绐楀彛鏂扮殑姘村钩浣嶇疆  
+				re.top = rt.top + (pe.y - pt.y); // 绐楀彛鏂扮殑鍨傜洿浣嶇疆
+				MoveWindow(hWnd, re.left, re.top, re.right, re.bottom, true); // 绉诲姩绐楀彛
 
 				drag_area.left = re.left;
 				drag_area.top = re.top;
@@ -370,7 +370,7 @@ LRESULT OnAttachBehavior(LPNMHL_ATTACH_BEHAVIOR lpab)
 	return 0;
 }
 
-bool GetHtmlResource(LPCSTR pszName, /*out*/PBYTE& pb, /*out*/DWORD& cb)
+bool GetHtmlResource(LPCSTR pszName, /*out*/PBYTE &pb, /*out*/DWORD &cb)
 {
   // Find specified resource and check if ok
   HRSRC hrsrc = ::FindResource(hInst, pszName, MAKEINTRESOURCE(RT_HTML));
@@ -390,7 +390,7 @@ bool GetHtmlResource(LPCSTR pszName, /*out*/PBYTE& pb, /*out*/DWORD& cb)
 }
 
 /*
-最小化到系统托盘
+鏈�灏忓寲鍒扮郴缁熸墭鐩?
 */
 void ToTray()
 {
