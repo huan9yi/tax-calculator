@@ -21,7 +21,7 @@ int window_height = 580;
 char szTitle[] = "工资计算器"; // The title bar text
 char szWindowClass[] = "工资计算器"; // The title bar text
 const char *app_name = "TexCalculator-9697DD2A-BB85-40EA-A890-DB956C6259AA"; // unique app name base on GUID
-float version = 0.1f;
+double version = 0.1;
 
 // Emvironment Variables
 static Json::Value cities = NULL; // json城市数据
