@@ -71,10 +71,12 @@
     <None Include="res\default.htm">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="htmlayout.dll" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="json_city.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="res\json_city.txt" />
   </ItemGroup>
 </Project>

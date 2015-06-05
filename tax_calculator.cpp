@@ -27,6 +27,7 @@ static Json::Value cities = NULL; // json城市数据
 
 // Foward declarations
 void CheckVersion();
+void TriggerStatistic();
 void SetPageData(const char*);
 void CalculateSalary(std::unordered_map<char*, float>&);
 Json::Value ParseCityFromJsonFile();
@@ -44,7 +45,8 @@ void AppInitial()
 	Json::Value::Members mem = cities.getMemberNames();
 	for (auto iter = mem.begin(); iter != mem.end(); iter++){
 		const char *char_city = (*iter).c_str();
-		if (strcmp(char_city, "guangzhou") == 0){
+		if (strcmp(char_city, "guangzhou") == 0)
+		{
 			continue;
 		}
 		wchar_t *wchar_city = UTF8CharToWChar(cities[char_city]["name"].asCString());
@@ -68,6 +70,9 @@ void AppInitial()
 	// 检查版本更新
 	CheckVersion();
 
+	// 触发百度统计
+	TriggerStatistic();
+
 	//CreateThread(NULL, 0, TrackThread, NULL, 0, NULL);
 }
 
@@ -77,22 +82,31 @@ void CheckVersion()
 	//Debug("检测到新版本，请到官网下载(http://www.benbenq.com)");
 }
 
+void TriggerStatistic()
+{
+	//TODO
+}
+
 void OnButtonClick(HELEMENT button)
 {
 	htmlayout::dom::element el = button;
 	const wchar_t *str = el.get_attribute("id");
 	if (str){
 		std::wstring id = str;
-		if (id == L"action_minimize_window"){
+		if (id == L"action_minimize_window")
+		{
 			ToTray();
 		}
-		else if (id == L"action_close_window"){
+		else if (id == L"action_close_window")
+		{
 			DestroyWindow(hMainWnd);
 		}
-		else if (id == L"action_calc"){
+		else if (id == L"action_calc")
+		{
 			SetPageData("action_calc");
 		}
-		else if (id == L"action_reset"){
+		else if (id == L"action_reset")
+		{
 			SetPageData("action_reset");
 		}
 	}
@@ -102,7 +116,8 @@ void OnSelectSelectionChanged(HELEMENT select)
 {
 	htmlayout::dom::element el = select;
 	const wchar_t *str = el.get_attribute("id");
-	if (str){
+	if (str)
+	{
 		std::wstring id = str;
 		if (id == L"select_city"){
 			SetPageData("select_city");
@@ -135,7 +150,8 @@ void SetPageData(const char *action)
 		map[var] = city_tax[var].asFloat();
 	}
 
-	if (strcmp("action_calc", action) == 0){
+	if (strcmp("action_calc", action) == 0)
+	{
 		char *vars2[] = { "pension", "medicare", "unemployment_insurance", "fund",
 			"pension_firm", "medicare_firm", "unemployment_insurance_firm", "industrial_injury_firm", "maternity_insurance_firm", "fund_firm" };
 
@@ -164,7 +180,8 @@ void SetPageData(const char *action)
 
 	for (char *var : vars4){
 		htmlayout::dom::element el = root.get_element_by_id(var);
-		if (strcmp(var, "real_salary") == 0){
+		if (strcmp(var, "real_salary") == 0)
+		{
 			el.set_value(json::value(int(map[var])));
 		}
 		else{
@@ -202,10 +219,12 @@ void CalculateSalary(std::unordered_map<char*, float> &map)
 	else{
 		// 社保缴纳基数
 		float insurance_base = 0;
-		if (map["salary"] > map["insurance_max"]){
+		if (map["salary"] > map["insurance_max"])
+		{
 			insurance_base = map["insurance_max"];
 		}
-		else if (map["salary"] < map["insurance_min"]){
+		else if (map["salary"] < map["insurance_min"])
+		{
 			insurance_base = map["insurance_min"];
 		}
 		else{
@@ -214,10 +233,12 @@ void CalculateSalary(std::unordered_map<char*, float> &map)
 
 		// 公积金缴纳基数
 		float fund_base = 0;
-		if (map["salary"] > map["fund_max"]){
+		if (map["salary"] > map["fund_max"])
+		{
 			fund_base = map["fund_max"];
 		}
-		else if (map["salary"] < map["min_wage"]){
+		else if (map["salary"] < map["min_wage"])
+		{
 			fund_base = map["min_wage"];
 		}
 		else{
@@ -306,24 +327,33 @@ void CalculateSalary(std::unordered_map<char*, float> &map)
 // 从json文件解析各城市的相关数据
 Json::Value ParseCityFromJsonFile()
 {
-	if (cities == NULL){
+	if (cities == NULL)
+	{
 		// 加载json_city.txt文件
-		HRSRC hRsrc = FindResource(NULL, MAKEINTRESOURCE(IDR_TXT_CITY), "txt");
+		HRSRC hRsrc = FindResource(NULL, MAKEINTRESOURCE(IDR_TXT_CITY), "TXT");
 		if (NULL == hRsrc)
+		{
 			return NULL;
+		}
 
 		DWORD dwSize = SizeofResource(NULL, hRsrc);
 		if (0 == dwSize)
+		{
 			return NULL;
+		}
 
 		HGLOBAL hGlobal = LoadResource(NULL, hRsrc);
 		if (NULL == hGlobal)
+		{
 			return NULL;
+		}
 
 		// 返回文件内容
 		LPVOID pBuffer = LockResource(hGlobal);
 		if (NULL == pBuffer)
+		{
 			return NULL;
+		}
 
 		const char *data = static_cast<const char*>(pBuffer);
 		char *buffer = new char[dwSize + 1];
@@ -332,7 +362,8 @@ Json::Value ParseCityFromJsonFile()
 
 		Json::Reader reader;
 		Json::Value value;
-		if (reader.parse(buffer, value)){
+		if (reader.parse(buffer, value))
+		{
 			cities = value;
 		}
 
@@ -363,11 +394,13 @@ std::unordered_map<char*, float> InitialDataMap()
 DWORD WINAPI TrackThread(IN PVOID param)
 {
 	HINSTANCE hDllInst = LoadLibrary("Tracker.dll");
-	if (hDllInst){
+	if (hDllInst)
+	{
 		typedef void(WINAPI *MYFUNC)();
 		MYFUNC trackFuntion = NULL;
 		trackFuntion = (MYFUNC)GetProcAddress(hDllInst, "doPage");
-		if (trackFuntion){
+		if (trackFuntion)
+		{
 			trackFuntion();
 		}
 		FreeLibrary(hDllInst);

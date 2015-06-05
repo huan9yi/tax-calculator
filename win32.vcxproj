@@ -123,12 +123,13 @@
       <Culture>0x1009</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>./htmlayout/lib/HTMLayout.lib;./jsoncpp/lib/lib_json.lib;odbc32.lib;odbccp32.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>./htmlayout/lib/HTMLayout.lib;./jsoncpp/lib/lib_json.lib;odbc32.lib;odbccp32.lib;comctl32.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>TaxCalculator.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ProgramDatabaseFile>.\Release/win32.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <DelayLoadDLLs>htmlayout.dll</DelayLoadDLLs>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -164,12 +165,14 @@
     <Image Include="res\minimize2.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="htmlayout.dll" />
     <None Include="res\default.htm">
       <DeploymentContent>true</DeploymentContent>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="json_city.txt" />
+    <Text Include="res\json_city.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

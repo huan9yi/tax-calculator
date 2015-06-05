@@ -2,6 +2,7 @@
 #include "resource.h"
 
 #include <ole2.h>
+#include <Shlwapi.h>
 
 #include "htmlayout.h"
 
@@ -16,7 +17,7 @@ extern void AppInitial();
 extern void OnButtonClick(HELEMENT button);
 extern void OnSelectSelectionChanged(HELEMENT button);
 
-// 鍙樹负绯荤粺鎵樼洏鍥炬爣鏃剁殑娑堟伅
+// 窗口变为系统托盘图标时的消息
 #define WM_ICON_NOTIFY WM_APP + 10
 
 // Global Variables
@@ -24,6 +25,7 @@ HINSTANCE hInst; // current instance
 HWND hMainWnd; // main window hwnd
 
 // Foward declarations
+bool ExtractDLL();
 ATOM MyRegisterClass(HINSTANCE);
 bool InitInstance(HINSTANCE, int);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -67,9 +69,15 @@ struct DOMEventsHandlerType : htmlayout::event_handler
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// 闃叉绋嬪簭琚惎鍔ㄥ娆?
+	// 单实例启动程序
 	CreateMutex(NULL, false, app_name);
 	if (GetLastError() == ERROR_ALREADY_EXISTS)
+	{
+		return -1;
+	}
+
+	// 释放依赖的DLL资源文件
+	if (!ExtractDLL())
 	{
 		return -1;
 	}
@@ -105,6 +113,63 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	OleUninitialize();
 
 	return msg.wParam;
+}
+
+bool ExtractDLL()
+{
+	TCHAR temp[MAX_PATH];
+	GetTempPath(MAX_PATH, temp);
+
+	SetDllDirectory(temp);
+
+	std::string name = std::string{ temp } + std::string{ "htmlayout.dll" };
+	LPCSTR dll_name = name.c_str();
+
+	if (!PathFileExists(dll_name))
+	{
+		HRSRC hRsrc = FindResource(NULL, MAKEINTRESOURCE(IDR_DLL1), "DLL");
+		if (NULL == hRsrc)
+		{
+			return false;
+		}
+
+		DWORD dwSize = SizeofResource(NULL, hRsrc);
+		if (0 == dwSize)
+		{
+			return false;
+		}
+
+		HGLOBAL hGlobal = LoadResource(NULL, hRsrc);
+		if (NULL == hGlobal)
+		{
+			return false;
+		}
+
+		// 返回文件内容
+		LPVOID pBuffer = LockResource(hGlobal);
+		if (NULL == pBuffer)
+		{
+			return false;
+		}
+
+		HANDLE hFile = CreateFile(dll_name, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_ARCHIVE, NULL);
+		if (hFile == INVALID_HANDLE_VALUE)
+		{
+			return false;
+		}
+
+		DWORD unuse = 0;
+		bool successful = WriteFile(hFile, pBuffer, dwSize, &unuse, NULL);
+		if (!successful)
+		{
+			CloseHandle(hFile);
+			return false;
+		}
+
+		CloseHandle(hFile);
+	}
+
+	return true;
 }
 
 //
@@ -153,7 +218,7 @@ bool InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	hInst = hInstance; // Store instance handle in our global variable
 
-	// 灞呬腑鏄剧ず
+	// 窗口居中
 	int scrWidth = GetSystemMetrics(SM_CXSCREEN);
 	int scrHeight = GetSystemMetrics(SM_CYSCREEN);
 	HWND hWnd = CreateWindow(szWindowClass, szTitle, WS_POPUP, (scrWidth - window_width) / 2, (scrHeight - window_height) / 2, window_width, window_height, NULL, NULL, hInstance, NULL);
@@ -182,11 +247,10 @@ bool InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	// 榧犳爣鎷栧姩绐楀彛鍙橀噺
 	static POINT pt, pe;
 	static RECT rt, re;
 	
-	// 榧犳爣鍙嫋鍔ㄥ尯鍩?
+	// 鼠标可拖动区域
 	static RECT drag_area;
 
 	// HTMLayout could be created as separate window 
@@ -197,20 +261,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	LRESULT lResult;
 	BOOL bHandled;
 	lResult = HTMLayoutProcND(hWnd, message, wParam, lParam, &bHandled);
-	if (bHandled){
+	if (bHandled)
+	{
 		return lResult;
 	}
 
 	switch (message)
 	{
-		// 鏃犵獥鍙ｇ殑绐楀彛绉诲姩
 		case WM_LBUTTONDOWN:
-			SetCapture(hWnd);      // 璁剧疆榧犳爣鎹曡幏(闃叉鍏夋爣璺戝嚭绐楀彛澶卞幓榧犳爣鐑偣)     
+			SetCapture(hWnd);
 			
-			GetCursorPos(&pt);      // 鑾峰彇榧犳爣鍏夋爣鎸囬拡褰撳墠浣嶇疆
-			GetWindowRect(hWnd, &rt);  // 鑾峰彇绐楀彛浣嶇疆涓庡ぇ灏?  
-			re.right = rt.right - rt.left;    // 淇濆瓨绐楀彛瀹藉害
-			re.bottom = rt.bottom - rt.top; // 淇濆瓨绐楀彛楂樺害
+			GetCursorPos(&pt);
+			GetWindowRect(hWnd, &rt);
+			re.right = rt.right - rt.left;
+			re.bottom = rt.bottom - rt.top;
 
 			drag_area.left = rt.left;
 			drag_area.top = rt.top;
@@ -220,15 +284,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 
 		case WM_LBUTTONUP:
-			ReleaseCapture();      // 閲婃斁榧犳爣鎹曡幏锛屾仮澶嶆甯哥姸鎬?   
+			ReleaseCapture();
 			break;
 
 		case WM_MOUSEMOVE:
-			GetCursorPos(&pe);     // 鑾峰彇鍏夋爣鎸囬拡鐨勬柊浣嶇疆
-			if (PtInRect(&drag_area, pe) && wParam == MK_LBUTTON){
-				re.left = rt.left + (pe.x - pt.x);  // 绐楀彛鏂扮殑姘村钩浣嶇疆  
-				re.top = rt.top + (pe.y - pt.y); // 绐楀彛鏂扮殑鍨傜洿浣嶇疆
-				MoveWindow(hWnd, re.left, re.top, re.right, re.bottom, true); // 绉诲姩绐楀彛
+			GetCursorPos(&pe);
+			if (PtInRect(&drag_area, pe) && wParam == MK_LBUTTON)
+			{
+				re.left = rt.left + (pe.x - pt.x);
+				re.top = rt.top + (pe.y - pt.y);
+				MoveWindow(hWnd, re.left, re.top, re.right, re.bottom, true);
 
 				drag_area.left = re.left;
 				drag_area.top = re.top;
@@ -269,7 +334,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			GetModuleFileNameW(NULL, &path[7], 2048 - 7);
 
 			PBYTE pb; DWORD cb;
-			if (GetHtmlResource("default", pb, cb)){
+			if (GetHtmlResource("default", pb, cb))
+			{
 				HTMLayoutLoadHtmlEx(hWnd, pb, cb, path); // we use path here so all relative links in the document will resolved against it.
 			}
 		}
@@ -374,7 +440,8 @@ bool GetHtmlResource(LPCSTR pszName, /*out*/PBYTE &pb, /*out*/DWORD &cb)
 {
   // Find specified resource and check if ok
   HRSRC hrsrc = ::FindResource(hInst, pszName, MAKEINTRESOURCE(RT_HTML));
-  if (!hrsrc){
+  if (!hrsrc)
+  {
 	  return false;
   }
 
@@ -390,7 +457,7 @@ bool GetHtmlResource(LPCSTR pszName, /*out*/PBYTE &pb, /*out*/DWORD &cb)
 }
 
 /*
-鏈�灏忓寲鍒扮郴缁熸墭鐩?
+最小化到系统托盘
 */
 void ToTray()
 {

@@ -55,6 +55,13 @@ CLOSE1                  PNG                     "res\\close1.png"
 CLOSE2                  PNG                     "res\\close2.png"
 MINIMIZE1               PNG                     "res\\minimize1.png"
 MINIMIZE2               PNG                     "res\\minimize2.png"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DLL
+//
+
+IDR_DLL1                DLL                     "htmlayout.dll"
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 

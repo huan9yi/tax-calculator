@@ -13,6 +13,7 @@
 #define IDR_TXT_CITY                    136
 #define IDI_ICON_BIG                    139
 #define IDI_ICON_SMALL                  140
+#define IDR_DLL1                        150
 #define ID_FILE_OPEN                    32771
 #define IDC_STATIC                      -1
 
@@ -20,7 +21,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        150
+#define _APS_NEXT_RESOURCE_VALUE        151
 #define _APS_NEXT_COMMAND_VALUE         32772
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           110
