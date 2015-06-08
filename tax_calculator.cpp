@@ -1,7 +1,10 @@
+#include "resource.h"
+
 #include <sstream>
 #include <unordered_map>
 
-#include "resource.h"
+#include <windows.h>
+#include <Winhttp.h>
 
 #include "htmlayout.h"
 #include "json/json.h"
@@ -26,12 +29,12 @@ double version = 0.1;
 static Json::Value cities = NULL; // json城市数据
 
 // Foward declarations
+void SetPageData(const char*);
+void CalculateSalary(std::unordered_map<char*, double>&);
+Json::Value ParseCityFromJsonFile();
+std::unordered_map<char*, double> InitialDataMap();
 void CheckVersion();
 void TriggerStatistic();
-void SetPageData(const char*);
-void CalculateSalary(std::unordered_map<char*, float>&);
-Json::Value ParseCityFromJsonFile();
-std::unordered_map<char*, float> InitialDataMap();
 
 void AppInitial()
 {
@@ -76,17 +79,6 @@ void AppInitial()
 	//CreateThread(NULL, 0, TrackThread, NULL, 0, NULL);
 }
 
-void CheckVersion()
-{	
-	//TODO
-	//Debug("检测到新版本，请到官网下载(http://www.benbenq.com)");
-}
-
-void TriggerStatistic()
-{
-	//TODO
-}
-
 void OnButtonClick(HELEMENT button)
 {
 	htmlayout::dom::element el = button;
@@ -128,7 +120,7 @@ void OnSelectSelectionChanged(HELEMENT select)
 // 设置页面各项数据
 void SetPageData(const char *action)
 {
-	std::unordered_map<char*, float> map = InitialDataMap();
+	std::unordered_map<char*, double> map = InitialDataMap();
 
 	htmlayout::dom::element root = htmlayout::dom::element::root_element(hMainWnd);
 
@@ -147,25 +139,20 @@ void SetPageData(const char *action)
 	// 取数据
 	char *vars1[] = { "medicare_plan", "threshold", "min_wage", "insurance_max", "insurance_min", "fund_max" };
 	for (char *var : vars1){
-		map[var] = city_tax[var].asFloat();
+		map[var] = city_tax[var].asDouble();
 	}
 
+	char *vars2[] = { "pension", "medicare", "unemployment_insurance", "fund", "pension_firm", "medicare_firm", "unemployment_insurance_firm", "industrial_injury_firm", "maternity_insurance_firm", "fund_firm" };
 	if (strcmp("action_calc", action) == 0)
 	{
-		char *vars2[] = { "pension", "medicare", "unemployment_insurance", "fund",
-			"pension_firm", "medicare_firm", "unemployment_insurance_firm", "industrial_injury_firm", "maternity_insurance_firm", "fund_firm" };
-
 		for (char *var : vars2){
 			htmlayout::dom::element el = root.get_element_by_id(var);
 			map[var] = _wtof(el.text().c_str());
 		}
 	}
 	else{
-		char *vars3[] = { "pension", "medicare", "unemployment_insurance", "fund",
-			"pension_firm", "medicare_firm", "unemployment_insurance_firm", "industrial_injury_firm", "maternity_insurance_firm", "fund_firm" };
-
-		for (char *var : vars3){
-			map[var] = city_tax[var].asFloat();
+		for (char *var : vars2){
+			map[var] = city_tax[var].asDouble();
 		}
 	}
 
@@ -175,10 +162,10 @@ void SetPageData(const char *action)
 	CalculateSalary(map);
 
 	// 设置页面数据
-	char *vars4[] = { "real_salary", "pension", "medicare", "unemployment_insurance", "industrial_injury", "maternity_insurance", "fund",
+	char *vars3[] = { "real_salary", "pension", "medicare", "unemployment_insurance", "industrial_injury", "maternity_insurance", "fund",
 		"pension_firm", "medicare_firm", "unemployment_insurance_firm", "industrial_injury_firm", "maternity_insurance_firm", "fund_firm" };
 
-	for (char *var : vars4){
+	for (char *var : vars3){
 		htmlayout::dom::element el = root.get_element_by_id(var);
 		if (strcmp(var, "real_salary") == 0)
 		{
@@ -191,10 +178,10 @@ void SetPageData(const char *action)
 
 	std::string str;
 	std::stringstream ss;
-	char *vars5[] = { "tax", "threshold", "pension_fee", "medicare_fee", "unemployment_insurance_fee", "industrial_injury_fee", "maternity_insurance_fee", "fund_fee", "personal_total_fee", 
+	char *vars4[] = { "tax", "threshold", "pension_fee", "medicare_fee", "unemployment_insurance_fee", "industrial_injury_fee", "maternity_insurance_fee", "fund_fee", "personal_total_fee", 
 		"pension_firm_fee", "medicare_firm_fee", "unemployment_insurance_firm_fee", "industrial_injury_firm_fee", "maternity_insurance_firm_fee", "fund_firm_fee", "firm_total_fee" };
 
-	for (char *var : vars5){
+	for (char *var : vars4){
 		htmlayout::dom::element el = root.get_element_by_id(var);
 		ss << map[var];
 		ss >> str;
@@ -204,7 +191,7 @@ void SetPageData(const char *action)
 }
 
 // 计算税后工资
-void CalculateSalary(std::unordered_map<char*, float> &map)
+void CalculateSalary(std::unordered_map<char*, double> &map)
 {
 	// 公式：
 	// 五险一金 = 社保缴纳基数 * (养老比例 ＋ 医疗比例 + 失业比例 + 工伤比例 + 生育比例) + 公积金缴纳基数 * 公积金比例
@@ -212,13 +199,13 @@ void CalculateSalary(std::unordered_map<char*, float> &map)
 	// 税后工资 = 税前工资 - 五险一金 - 税
 
 	// 高于最低工资才计算
-	if (map["salary"] <= 0 | (map["min_wage"] > 0 && map["salary"] < map["min_wage"]))
+	if ((map["salary"] <= 0) | (map["min_wage"] > 0 && map["salary"] < map["min_wage"]))
 	{
 		map["real_salary"] = map["salary"];
 	}
 	else{
 		// 社保缴纳基数
-		float insurance_base = 0;
+		double insurance_base = 0;
 		if (map["salary"] > map["insurance_max"])
 		{
 			insurance_base = map["insurance_max"];
@@ -232,7 +219,7 @@ void CalculateSalary(std::unordered_map<char*, float> &map)
 		}
 
 		// 公积金缴纳基数
-		float fund_base = 0;
+		double fund_base = 0;
 		if (map["salary"] > map["fund_max"])
 		{
 			fund_base = map["fund_max"];
@@ -246,11 +233,11 @@ void CalculateSalary(std::unordered_map<char*, float> &map)
 		}
 
 		// 五险一金，个人部分
-		float pension_fee = insurance_base * map["pension"] / 100;
-		float medicare_fee = insurance_base * map["medicare"] / 100 + map["medicare_plan"];
-		float unemployment_insurance_fee = insurance_base * map["unemployment_insurance"] / 100;
-		float fund_fee = fund_base * map["fund"] / 100;
-		float personal_total_fee = pension_fee + medicare_fee + unemployment_insurance_fee + fund_fee;
+		double pension_fee = insurance_base * map["pension"] / 100;
+		double medicare_fee = insurance_base * map["medicare"] / 100 + map["medicare_plan"];
+		double unemployment_insurance_fee = insurance_base * map["unemployment_insurance"] / 100;
+		double fund_fee = fund_base * map["fund"] / 100;
+		double personal_total_fee = pension_fee + medicare_fee + unemployment_insurance_fee + fund_fee;
 
 		if (map["salary"] - personal_total_fee < 0)
 		{
@@ -259,17 +246,17 @@ void CalculateSalary(std::unordered_map<char*, float> &map)
 		else
 		{
 			// 五险一金，公司部分
-			float pension_firm_fee = insurance_base * map["pension_firm"] / 100;
-			float medicare_firm_fee = insurance_base * map["medicare_firm"] / 100;
-			float unemployment_insurance_firm_fee = insurance_base * map["unemployment_insurance_firm"] / 100;
-			float industrial_injury_firm_fee = insurance_base * map["industrial_injury_firm"] / 100;
-			float maternity_insurance_firm_fee = insurance_base * map["maternity_insurance_firm"] / 100;
-			float fund_firm_fee = fund_base * map["fund_firm"] / 100;
-			float firm_total_fee = pension_firm_fee + medicare_firm_fee + unemployment_insurance_firm_fee + industrial_injury_firm_fee + maternity_insurance_firm_fee + fund_firm_fee;
+			double pension_firm_fee = insurance_base * map["pension_firm"] / 100;
+			double medicare_firm_fee = insurance_base * map["medicare_firm"] / 100;
+			double unemployment_insurance_firm_fee = insurance_base * map["unemployment_insurance_firm"] / 100;
+			double industrial_injury_firm_fee = insurance_base * map["industrial_injury_firm"] / 100;
+			double maternity_insurance_firm_fee = insurance_base * map["maternity_insurance_firm"] / 100;
+			double fund_firm_fee = fund_base * map["fund_firm"] / 100;
+			double firm_total_fee = pension_firm_fee + medicare_firm_fee + unemployment_insurance_firm_fee + industrial_injury_firm_fee + maternity_insurance_firm_fee + fund_firm_fee;
 
 			// 税
-			float tax = 0;
-			float salary_after_threshold = map["salary"] - personal_total_fee - map["threshold"];
+			double tax = 0;
+			double salary_after_threshold = map["salary"] - personal_total_fee - map["threshold"];
 			if (salary_after_threshold > 0){
 				if (salary_after_threshold <= 1500)
 				{
@@ -302,7 +289,7 @@ void CalculateSalary(std::unordered_map<char*, float> &map)
 			}
 
 			// 税后工资
-			float real_salary = map["salary"] - personal_total_fee - tax;
+			double real_salary = map["salary"] - personal_total_fee - tax;
 
 			map["pension_fee"] = pension_fee;
 			map["medicare_fee"] = medicare_fee;
@@ -374,9 +361,9 @@ Json::Value ParseCityFromJsonFile()
 }
 
 // 页面上的各项数据
-std::unordered_map<char*, float> InitialDataMap()
+std::unordered_map<char*, double> InitialDataMap()
 {
-	std::unordered_map<char*, float> map = {
+	std::unordered_map<char*, double> map = {
 		// 直接获取
 		{ "salary", 0 }, { "pension", 0 }, { "medicare", 0 }, { "medicare_plan", 0 }, { "unemployment_insurance", 0 }, { "industrial_injury", 0 }, { "maternity_insurance", 0 }, { "fund", 0 }, 
 		{ "pension_firm", 0 }, { "medicare_firm", 0 }, { "unemployment_insurance_firm", 0 }, { "industrial_injury_firm", 0 }, { "maternity_insurance_firm", 0 }, { "fund_firm", 0 }, 
@@ -389,6 +376,41 @@ std::unordered_map<char*, float> InitialDataMap()
 	};
 
 	return map;
+}
+
+void CheckVersion()
+{
+	//TODO
+	//Debug("检测到新版本，请到官网下载(http://www.benbenq.com)");
+}
+
+void TriggerStatistic()
+{
+	DWORD dwSize = 0;
+	DWORD dwDownloaded = 0;
+	LPSTR pszOutBuffer;
+	BOOL  bResults = FALSE;
+	HINTERNET hSession = NULL, hConnect = NULL, hRequest = NULL;
+
+	// Use WinHttpOpen to obtain a session handle.
+	hSession = WinHttpOpen(L"WinHTTP Example/1.0", WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
+
+	// Specify an HTTP server.
+	if (hSession)
+		hConnect = WinHttpConnect(hSession, L"www.microsoft.com", INTERNET_DEFAULT_HTTPS_PORT, 0);
+
+	// Create an HTTP request handle.
+	if (hConnect)
+		hRequest = WinHttpOpenRequest(hConnect, L"GET", NULL, NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, WINHTTP_FLAG_SECURE);
+
+	// Send a request.
+	if (hRequest)
+		bResults = WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0);
+
+	// Close any open handles.
+	if (hRequest) WinHttpCloseHandle(hRequest);
+	if (hConnect) WinHttpCloseHandle(hConnect);
+	if (hSession) WinHttpCloseHandle(hSession);
 }
 
 DWORD WINAPI TrackThread(IN PVOID param)

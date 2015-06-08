@@ -123,8 +123,8 @@
       <Culture>0x1009</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>./htmlayout/lib/HTMLayout.lib;./jsoncpp/lib/lib_json.lib;odbc32.lib;odbccp32.lib;comctl32.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>TaxCalculator.exe</OutputFile>
+      <AdditionalDependencies>./htmlayout/lib/HTMLayout.lib;./jsoncpp/lib/lib_json.lib;odbc32.lib;odbccp32.lib;comctl32.lib;Shlwapi.lib;Winhttp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(TargetName).exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ProgramDatabaseFile>.\Release/win32.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
