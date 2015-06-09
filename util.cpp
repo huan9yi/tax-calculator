@@ -62,12 +62,7 @@ void Debug(const char *msg, HWND hMainWnd = NULL){
 }
 
 void Debug(int msg, HWND hMainWnd = NULL){
-	std::string str;
-	std::stringstream ss;
-	ss << msg;
-	ss >> str;
-
-	MessageBox(hMainWnd, str.c_str(), "пео╒", MB_OK);
+	Debug(std::to_string(msg).c_str(), hMainWnd);
 }
 
 void DebugW(const wchar_t *msg, HWND hMainWnd = NULL){
