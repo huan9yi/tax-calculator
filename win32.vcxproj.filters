@@ -24,7 +24,7 @@
     <ClCompile Include="tax_calculator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="util.cpp">
+    <ClCompile Include="..\..\Windows\util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
