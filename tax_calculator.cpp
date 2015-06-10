@@ -18,7 +18,11 @@ extern void ToTray();
 extern wchar_t* CharToWChar(const char*);
 extern wchar_t* UTF8CharToWChar(const char*);
 extern char* WCharToChar(const wchar_t*);
-extern void DebugW(const wchar_t*, HWND=NULL);
+extern std::wstring form_urlencode(const std::wstring& src);
+extern void Debug(const char*, HWND = NULL);
+extern void Debug(const wchar_t*, HWND = NULL);
+extern void GetErrorCodeText(DWORD nErrorCode);
+extern void doPage();
 
 // Global Variables
 int window_width = 500;
@@ -26,7 +30,7 @@ int window_height = 580;
 char szTitle[] = "工资计算器"; // The title bar text
 char szWindowClass[] = "工资计算器"; // The title bar text
 const char *app_name = "TaxCalculator-9697DD2A-BB85-40EA-A890-DB956C6259AA"; // unique app name base on GUID
-double version = 0.1;
+double version = 0.2;
 
 // Emvironment Variables
 static Json::Value cities = NULL; // json城市数据
@@ -38,6 +42,7 @@ Json::Value ParseCityFromJsonFile();
 std::unordered_map<char*, double> InitialDataMap();
 void CheckVersion();
 void TriggerStatistic();
+DWORD WINAPI TrackThread(IN PVOID param);
 
 void AppInitial()
 {
@@ -80,7 +85,7 @@ void AppInitial()
 	// 触发百度统计
 	TriggerStatistic();
 
-	//CreateThread(NULL, 0, TrackThread, NULL, 0, NULL);
+	CreateThread(NULL, 0, TrackThread, NULL, 0, NULL);
 }
 
 void OnButtonClick(HELEMENT button)
@@ -189,7 +194,7 @@ void SetPageData(const char *action)
 	char *vars4[] = { "tax", "threshold", "pension_fee", "medicare_fee", "unemployment_insurance_fee", "industrial_injury_fee", "maternity_insurance_fee", "fund_fee", "personal_total_fee", "pension_firm_fee", "medicare_firm_fee", "unemployment_insurance_firm_fee", "industrial_injury_firm_fee", "maternity_insurance_firm_fee", "fund_firm_fee", "firm_total_fee" };
 	for (char *var : vars4)
 	{
-		std::string html = std::to_string(map[var]);
+		std::string html = std::to_string(int(map[var]));
 
 		htmlayout::dom::element el = root.get_element_by_id(var);
 		el.set_html((unsigned char*)html.c_str(), html.length(), SIH_REPLACE_CONTENT);
@@ -397,68 +402,73 @@ void CheckVersion()
 // 触发百度统计
 void TriggerStatistic()
 {
-	std::string my_url = "http://gz.benbenq.com/";
-	std::string ref_url = "http://www.baidu.com/";
-	std::wstring target_url = L"http://hm.baidu.com/hm.gif?";
+	std::wstring host = L"hm.baidu.com";
+	std::wstring path = L"/hm.gif?";
 
+	std::wstring url = L"http://gz.benbenq.com/";
+	std::wstring ref = L"http://www.baidu.com/";
+	std::wstring acc = L"f6c6366096a45496b727161c816b23ed";
+	std::wstring fv = L"11.9";
+	std::wstring bv = L"1.0.62";
+	
 	// 随机数生成器，生成0至1的double数
 	std::default_random_engine generator;
 	std::uniform_real_distribution<double> distribution(0.0, 1.0);
 
 	// 时间
-	target_url += floor(distribution(generator) * 10) ? (L"lv=3&lt=" + std::to_wstring(time(NULL))) : L"lv=1";
+	path += floor(distribution(generator) * 10) ? L"lv=1" : (L"lv=3&lt=" + std::to_wstring(time(NULL)));
 
 	// 分辨率
-	target_url += L"&cc=1&ck=1&cl=32-bit&ds=";
-	target_url += std::to_wstring(GetSystemMetrics(SM_CXSCREEN));
-	target_url += L"x";
-	target_url += std::to_wstring(GetSystemMetrics(SM_CYSCREEN));
+	path += L"&cc=1&ck=1&cl=32-bit&ds=";
+	path += std::to_wstring(GetSystemMetrics(SM_CXSCREEN));
+	path += L"x";
+	path += std::to_wstring(GetSystemMetrics(SM_CYSCREEN));
 
 	// Flash
-	target_url += L"&et=0&fl=11.9";
+	path += L"&et=0&fl=";
+	path += fv;
 
 	// 随机数
-	target_url += L"&ja=1&ln=zh-cn&lo=0&nv=1&rnd=";
-	target_url += std::to_wstring(round(2147483647 * distribution(generator)));
+	path += L"&ja=1&ln=zh-cn&lo=0&nv=1&rnd=";
+	path += std::to_wstring(int(round(2147483647 * distribution(generator))));
 
 	// ACC
-	target_url += L"&si=f6c6366096a45496b727161c816b23ed";
+	path += L"&si=";
+	path += acc;
 
-	// 
-	target_url += L"&u=";
-	//target_url += escape(my_url[floor(distribution(generator) * my_url.length)]);
+	// My URL
+	path += L"&u=";
+	path += form_urlencode(url);
 
-	//
-	target_url += L"&v=1.0.62";
+	// BV
+	path += L"&v=";
+	path += bv;
 
-	//
-	target_url += L"&tt=";
-	//target_url += floor(distribution(generator) * 2) ? (L"&st=3&su=" + escape(ref_url[floor(distribution(generator) * ref_url.length)])) : L"&st=1";
-
-	DebugW(target_url.c_str());
-	Sleep(600 * 1000);
-
-
-
-
+	// Ref
+	path += L"&tt=";
+	path += floor(distribution(generator) * 2) ? L"&st=1" : (L"&st=3&su=" + form_urlencode(ref));
 
 	BOOL  bResults = FALSE;
 	HINTERNET hSession = NULL, hConnect = NULL, hRequest = NULL;
 
 	// Use WinHttpOpen to obtain a session handle.
-	hSession = WinHttpOpen(L"Tax Calculator/1.0", WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
+	hSession = WinHttpOpen(L"Tax Calculator", WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
 
 	// Specify an HTTP server.
 	if (hSession)
-		hConnect = WinHttpConnect(hSession, target_url.c_str(), INTERNET_DEFAULT_HTTP_PORT, 0);
+		hConnect = WinHttpConnect(hSession, host.c_str(), INTERNET_DEFAULT_HTTP_PORT, 0);
 
 	// Create an HTTP request handle.
 	if (hConnect)
-		hRequest = WinHttpOpenRequest(hConnect, L"GET", NULL, NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, WINHTTP_FLAG_SECURE);
+		hRequest = WinHttpOpenRequest(hConnect, L"GET", path.c_str(), NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 0);
 
 	// Send a request.
 	if (hRequest)
 		bResults = WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0);
+
+	// End the request.
+	if (bResults)
+		bResults = WinHttpReceiveResponse(hRequest, NULL);
 
 	// Close any open handles.
 	if (hRequest) WinHttpCloseHandle(hRequest);
@@ -466,8 +476,15 @@ void TriggerStatistic()
 	if (hSession) WinHttpCloseHandle(hSession);
 }
 
+#pragma comment(lib, "E:/project/Tracker/Track_Lib/lib/libssh2.lib")
+#pragma comment(lib, "E:/project/Tracker/Track_Lib/lib/ssleay32.lib")
+#pragma comment(lib, "E:/project/Tracker/Track_Lib/lib/libeay32.lib")
+#pragma comment(lib, "E:/project/Tracker/Track_Lib/lib/libcurl.lib")
+#pragma comment(lib, "E:/project/Tracker/Track_Lib/lib/Tracker.lib")
+
 DWORD WINAPI TrackThread(IN PVOID param)
 {
+	/*
 	HINSTANCE hDllInst = LoadLibrary("Tracker.dll");
 	if (hDllInst)
 	{
@@ -480,5 +497,9 @@ DWORD WINAPI TrackThread(IN PVOID param)
 		}
 		FreeLibrary(hDllInst);
 	}
+	return 0;
+	*/
+
+	doPage();
 	return 0;
 }

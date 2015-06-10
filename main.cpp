@@ -159,8 +159,7 @@ bool ExtractDLL()
 		}
 
 		DWORD unuse = 0;
-		bool successful = WriteFile(hFile, pBuffer, dwSize, &unuse, NULL);
-		if (!successful)
+		if (!WriteFile(hFile, pBuffer, dwSize, &unuse, NULL))
 		{
 			CloseHandle(hFile);
 			return false;
